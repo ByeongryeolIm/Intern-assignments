@@ -18,7 +18,7 @@ public class Reservation {
 
     private Long movieId;
 
-    private String Cinema;
+    private String cinema;
 
     private String seat;
 
