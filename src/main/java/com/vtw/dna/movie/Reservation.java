@@ -1,11 +1,9 @@
-package com.vtw.dna.reservation;
+package com.vtw.dna.movie;
 
+import com.vtw.dna.movie.Movie;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,14 +12,16 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservationId;
-
-    private Long movieId;
+    private Long id;
 
     private String cinema;
 
     private String seat;
 
     private Date viewDate;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
 }

@@ -1,7 +1,9 @@
 package com.vtw.dna.movie.controller;
 
 import com.vtw.dna.movie.Movie;
+import com.vtw.dna.movie.Reservation;
 import com.vtw.dna.movie.repository.MovieRepository;
+import com.vtw.dna.movie.repository.ReservationRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -10,13 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+
 @Slf4j
 @RestController
-@AllArgsConstructor
+@AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자를 만듦
 @RequestMapping("/movies")
 public class MovieController {
 
     private final MovieRepository repository;
+    private final ReservationRepository reservationRepository;
 
     @GetMapping
     public Page<Movie> list(@RequestParam("page") int page,
@@ -57,5 +61,20 @@ public class MovieController {
         return oldOne;
     }
 
+    @PostMapping("/reserve")
+    public Reservation reserve(@RequestBody Reservation reserve) {
+        reservationRepository.save(reserve);
+        return reserve;
+    }
+    @GetMapping("/reserveList")
+    public Page<Reservation> reserveList(@RequestParam("page") int page,
+                                         @RequestParam("size") int size,
+                                         @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
+                                         @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+                                         @RequestParam(value = "filter", defaultValue = "") String filter) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
+        Page<Reservation> reservations= reservationRepository.findAllByCinemaContains(pageable,filter);
+        return reservations;
+    }
 
 }
