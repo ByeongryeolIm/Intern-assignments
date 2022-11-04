@@ -76,5 +76,12 @@ public class MovieController {
         Page<Reservation> reservations= reservationRepository.findAllByCinemaContains(pageable,filter);
         return reservations;
     }
+    @DeleteMapping("/reserveCancel/{id}")
+    public Reservation reserveCancel(@PathVariable Long id) {
+        System.out.println("id값:"+id);
+        Reservation oldOne = reservationRepository.findById(id).orElseThrow();
+        reservationRepository.delete(oldOne);
+        return oldOne;
+    }
 
 }

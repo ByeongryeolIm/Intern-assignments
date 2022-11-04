@@ -18,6 +18,8 @@ public class Reservation {
 
     private String seat;
 
+    private String viewTime;
+
     private Date viewDate;
 
     @ManyToOne
