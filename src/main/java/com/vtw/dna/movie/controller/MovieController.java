@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자를 만듦
+@AllArgsConstructor
 @RequestMapping("/movies")
 public class MovieController {
 
