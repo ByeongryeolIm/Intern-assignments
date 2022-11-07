@@ -32,19 +32,16 @@ public class MovieController {
         Page<Movie> movies = repository.findAllBySubjectContains(pageable, filter);
         return  movies;
     }
-
     @PostMapping
     public Movie create(@RequestBody Movie newOne) {
         repository.save(newOne);
         return newOne;
     }
-
     @GetMapping("/{id}")
     public Movie find(@PathVariable Long id) {
         Movie movie = repository.findById(id).orElseThrow();
         return movie;
     }
-
     @PutMapping("/{id}")
     public Movie update(@PathVariable Long id, @RequestBody Movie newOne) {
         Movie oldOne = repository.findById(id).orElseThrow();
@@ -52,7 +49,6 @@ public class MovieController {
         repository.save(oldOne);
         return oldOne;
     }
-
     @DeleteMapping("/{id}")
     public Movie delete(@PathVariable Long id) {
         System.out.println("id값:"+id);
@@ -60,7 +56,6 @@ public class MovieController {
         repository.delete(oldOne);
         return oldOne;
     }
-
     @PostMapping("/reserve")
     public Reservation reserve(@RequestBody Reservation reserve) {
         reservationRepository.save(reserve);
